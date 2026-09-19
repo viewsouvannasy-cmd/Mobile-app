@@ -9,7 +9,7 @@ export default function RootLayout() {
   }
 
   if (isSignedIn) {
-    return <Redirect href="/(home)" />;
+    return <Redirect href="/(tabs)" />;
   }
 
   return (
