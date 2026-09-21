@@ -1,15 +1,25 @@
 import { useAuth } from "@clerk/expo";
 import { Redirect } from "expo-router";
 import { NativeTabs } from "expo-router/build/native-tabs";
+import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+
+import useGroceryStore from "@/store/grocery-store";
 
 export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
 
   const colorScheme = useColorScheme();
 
+  const { loadItems } = useGroceryStore();
+
   const isDark = colorScheme === "dark";
   const tabTintColor = isDark ? "hsl(142 70% 54%)" : "hsl(147 75% 33%)";
+
+  useEffect(() => {
+    loadItems();
+  }, []);
+
   if (!isLoaded) {
     return null;
   }

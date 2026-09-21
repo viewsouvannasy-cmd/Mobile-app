@@ -1,4 +1,4 @@
-import { clearGroceryItems } from "@/server/db-action";
+import { clearGroceryItems } from "@/lib/server/db-action";
 
 export async function POST() {
   try {

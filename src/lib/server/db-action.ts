@@ -1,12 +1,4 @@
-import { neon } from "@neondatabase/serverless";
-
-const neonUrl = process.env.NEON_URL;
-
-if (!neonUrl) {
-  throw new Error("NEON_URL is not set");
-}
-
-const sql = neon(neonUrl);
+import { sql } from "@/app/api/items/index+api";
 
 export const getGroceryItmes = async () => {
   const rows = await sql`
@@ -46,6 +38,7 @@ export const setGroceryItemPurchased = async (
   UPDATE grocery_items
   SET purchased = ${purchased}
   WHERE id = ${id}
+  RETURNING *
   `;
 
   if (row.length === 0) {
@@ -63,6 +56,7 @@ export const updateGroceryItemQuantity = async (
     UPDATE grocery_items 
     SET quantity = ${Math.max(1, quantity)}
     WHERE id = ${id}
+    RETURNING *
   `;
   if (row.length === 0) {
     return;

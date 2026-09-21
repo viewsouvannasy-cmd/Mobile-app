@@ -1,10 +1,20 @@
-import { createGroceryItem, getGroceryItmes } from "@/server/db-action";
+import { neon } from "@neondatabase/serverless";
+
+const neonUrl = process.env.NEON_URL;
+
+if (!neonUrl) {
+  throw new Error("NEON_URL is not set");
+}
+
+export const sql = neon(neonUrl);
+
+import { createGroceryItem, getGroceryItmes } from "@/lib/server/db-action";
 
 export async function GET() {
   try {
-    const results = await getGroceryItmes();
+    const items = await getGroceryItmes();
 
-    return Response.json({ ok: true, results }, { status: 200 });
+    return Response.json({ ok: true, items }, { status: 200 });
   } catch (error) {
     console.log(error);
     return Response.json({ ok: false, msg: error }, { status: 500 });
