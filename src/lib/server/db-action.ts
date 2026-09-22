@@ -1,4 +1,4 @@
-import { sql } from "@/app/api/items/index+api";
+import sql from "./db";
 
 export const getGroceryItmes = async () => {
   const rows = await sql`
@@ -54,7 +54,7 @@ export const updateGroceryItemQuantity = async (
 ) => {
   const row = await sql`
     UPDATE grocery_items 
-    SET quantity = ${Math.max(1, quantity)}
+    SET quantity = ${quantity}
     WHERE id = ${id}
     RETURNING *
   `;

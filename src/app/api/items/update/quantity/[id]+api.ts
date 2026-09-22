@@ -6,6 +6,7 @@ export async function PATCH(req: Request, { id }: { id: string }) {
     const { quantity } = body;
 
     const item = await updateGroceryItemQuantity(id, quantity);
+
     return Response.json({ ok: true, item }, { status: 200 });
   } catch (error) {
     return Response.json({ ok: false, msg: error }, { status: 500 });

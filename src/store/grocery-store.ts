@@ -30,7 +30,7 @@ interface GroceryStore {
   loadItems: () => Promise<void>;
   addItem: (input: CreateItemInput) => Promise<GroceryItem | void>;
   updateQuantity: (id: string, quantity: number) => Promise<void>;
-  togglePurchased: (id: string) => Promise<void>;
+  togglePurchased: (id: string, purchased: boolean) => Promise<void>;
   removeItem: (is: string) => Promise<void>;
   clearPurchased: () => Promise<void>;
 }
@@ -64,7 +64,7 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
     try {
       const res = await fetch("api/items", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "/application/json" },
         body: JSON.stringify({
           name: input.name,
           category: input.category,
@@ -93,11 +93,11 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
     const nextQuantity = Math.max(1, quantity);
     set({ error: null });
     try {
-      const res = await fetch(`api/items/quantity/${id}`, {
+      const res = await fetch(`/api/items/update/quantity/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          priority: nextQuantity,
+          quantity: nextQuantity,
         }),
       });
 
@@ -112,17 +112,14 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
         ),
       }));
     } catch (error) {
-      console.log(`loading item error ${error}`);
+      console.log(`update quantity error`);
       set({ error: "Something went wrong" });
     } finally {
       set({ isLoading: false });
     }
   },
 
-  togglePurchased: async (id) => {
-    const currentItem = get().items.find((item) => item.id === id);
-    if (!currentItem) return;
-    const nextPurchased = !currentItem.purchased;
+  togglePurchased: async (id, purchased) => {
     set({ error: null });
     try {
       const res = await fetch(`api/items/purchased/${id}`, {
@@ -130,9 +127,10 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          priority: nextPurchased,
+          priority: purchased,
         }),
       });
+
       const payload = (await res.json()) as ItemResponse;
 
       if (!res.ok) {

@@ -1,13 +1,3 @@
-import { neon } from "@neondatabase/serverless";
-
-const neonUrl = process.env.NEON_URL;
-
-if (!neonUrl) {
-  throw new Error("NEON_URL is not set");
-}
-
-export const sql = neon(neonUrl);
-
 import { createGroceryItem, getGroceryItmes } from "@/lib/server/db-action";
 
 export async function GET() {
@@ -28,7 +18,7 @@ export async function POST(req: Request) {
 
     if (!name || !category || !priority) {
       return Response.json(
-        { ok: false, msg: "Please provide all require " },
+        { ok: false, msg: "Please provide all require" },
         { status: 400 },
       );
     }
