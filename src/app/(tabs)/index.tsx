@@ -1,44 +1,46 @@
-import { ScrollView, Text, View } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
 
 import TabBackground from "@/components/TabBackground";
 
+import CompetedItem from "@/components/list/CompetedItem";
 import ListHeroSection from "@/components/list/ListHeroSection";
 
 import useGroceryStore from "@/store/grocery-store";
-
-import "@/global.css";
 
 import ItemGrocery from "@/components/list/ItemGrocery";
 
 export default function MainScreen() {
   const { items } = useGroceryStore();
 
-  const isPandingItem = items.filter((item) => !item.purchased);
+  const pandingItem = items.filter((item) => !item.purchased);
 
   return (
     <ScrollView
-      className="gap-4 p-5 bg-background"
-
+      className=" bg-background"
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ padding: 13, gap: 14 }}
     >
       <TabBackground />
 
       <ListHeroSection />
 
-      <View className="flex-row justify-between mt-3 ">
+      <View className="flex-row justify-between ">
         <Text className="text-sm font-semibold uppercase tracking-[1px] text-muted-foreground">
           shopping item
         </Text>
         <Text className="text-sm font-semibold  tracking-[1px] text-muted-foreground">
-          {isPandingItem.length} active
+          {pandingItem.length} active
         </Text>
       </View>
 
-      <View className="gap-2 mt-1">
-        {isPandingItem.map((item) => {
-          return <ItemGrocery key={item.id} item={item} />;
-        })}
-      </View>
+      <FlatList
+        data={pandingItem}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <ItemGrocery item={item} />}
+        contentContainerStyle={{ gap: 10 }}
+      />
+
+      <CompetedItem />
     </ScrollView>
   );
 }

@@ -6,6 +6,8 @@ import { useColorScheme } from "react-native";
 
 import useGroceryStore from "@/store/grocery-store";
 
+import "@/global.css";
+
 export default function TabsLayout() {
   const { isLoaded, isSignedIn } = useAuth();
 

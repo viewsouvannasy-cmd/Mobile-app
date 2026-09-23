@@ -122,12 +122,11 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
   togglePurchased: async (id, purchased) => {
     set({ error: null });
     try {
-      const res = await fetch(`api/items/purchased/${id}`, {
+      const res = await fetch(`/api/items/update/purchased/${id}`, {
         method: "PATCH",
-
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          priority: purchased,
+          purchased: purchased,
         }),
       });
 
