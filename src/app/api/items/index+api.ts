@@ -23,14 +23,16 @@ export async function POST(req: Request) {
       );
     }
 
-    const results = await createGroceryItem({
+    const item = await createGroceryItem({
       name,
       category,
       quantity,
       priority,
     });
-    return Response.json({ ok: true, results }, { status: 200 });
+
+    return Response.json({ ok: true, item }, { status: 200 });
   } catch (error) {
+    console.log(error);
     return Response.json({ ok: false, msg: error }, { status: 500 });
   }
 }

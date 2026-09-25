@@ -1,6 +1,6 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 
 import useGroceryStore from "@/store/grocery-store";
 
@@ -42,6 +42,8 @@ const PlannerFormCard = () => {
       quantity: Number(inputQuantity),
       priority,
     });
+
+    Alert.alert("add gocery success");
 
     setInputNameItem("");
     setInputQuantity("1");

@@ -17,14 +17,16 @@ export const createGroceryItem = async (input: {
   priority: string;
 }) => {
   const row = await sql`
-    INSER INTO grocery_items (id, name , category , quantity , purchased , priority , update_at)
+    INSERT INTO grocery_items (id, name , category , quantity , priority , updated_at)
     VALUES (
     ${crypto.randomUUID()},
     ${input.name},
     ${input.category},
+    ${input.quantity},
     ${input.priority},
     ${Date.now()}
     )
+    RETURNING *
   `;
 
   return row[0];

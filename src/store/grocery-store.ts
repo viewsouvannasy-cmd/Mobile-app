@@ -62,7 +62,7 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
   addItem: async (input) => {
     set({ error: null });
     try {
-      const res = await fetch("api/items", {
+      const res = await fetch("/api/items", {
         method: "POST",
         headers: { "Content-Type": "/application/json" },
         body: JSON.stringify({
@@ -82,7 +82,7 @@ const useGroceryStore = create<GroceryStore>((set, get) => ({
       set((state) => ({ items: [payload.item, ...state.items] }));
       return payload.item;
     } catch (error) {
-      console.log(`loading item error ${error}`);
+      console.log(`add item error ${error}`);
       set({ error: "Something went wrong" });
     } finally {
       set({ isLoading: false });

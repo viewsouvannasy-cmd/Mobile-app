@@ -11,7 +11,7 @@ import PlannerFormCard from "@/components/planner/PlannerFormCard";
 import PlannerImageHero from "@/components/planner/PlannerImageHero";
 
 const Planner = () => {
-  const { items } = useGroceryStore();
+  const { items, addItem } = useGroceryStore();
 
   const pendingItems = items.filter((item) => !item.purchased).length;
   const hightPriorityItems = items.filter(
