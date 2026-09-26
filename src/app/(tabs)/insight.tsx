@@ -3,6 +3,8 @@ import { ScrollView } from "react-native";
 import TabBackground from "@/components/TabBackground";
 
 import InsightCategory from "@/components/insight/InsightCategory";
+import InsightClearButton from "@/components/insight/InsightClearButton";
+import InsightPriroitySection from "@/components/insight/InsightPriroitySection";
 import InsightStatusSection from "@/components/insight/InsightStatusSection";
 import UserProfile from "@/components/insight/UserProfile";
 
@@ -19,6 +21,10 @@ const Insight = () => {
       <UserProfile />
       <InsightStatusSection />
       <InsightCategory />
+
+      <InsightPriroitySection />
+
+      <InsightClearButton />
     </ScrollView>
   );
 };
